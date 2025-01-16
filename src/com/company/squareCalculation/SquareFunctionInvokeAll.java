@@ -2,12 +2,12 @@ package com.company.squareCalculation;
 
 import java.util.concurrent.RecursiveAction;
 
-public class SquareFunction extends RecursiveAction {
+public class SquareFunctionInvokeAll extends RecursiveAction {
 	final int min = 10;
 	long[] data;
 	int start, end;
 
-	SquareFunction(long[] data, int start, int end) {
+	SquareFunctionInvokeAll(long[] data, int start, int end) {
 		this.data = data;
 		this.start = start;
 		this.end = end;
@@ -21,8 +21,8 @@ public class SquareFunction extends RecursiveAction {
 			}
 		} else {
 			int middle = (start + end) / 2;
-			invokeAll(new SquareFunction(data, start, middle),
-					new SquareFunction(data, middle, end));
+			invokeAll(new SquareFunctionInvokeAll(data, start, middle),
+					new SquareFunctionInvokeAll(data, middle, end));
 		}
 	}
 }

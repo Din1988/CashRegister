@@ -7,17 +7,13 @@ public class BankAtomic {
 	private final AtomicLong balance = new AtomicLong(100);
 
 	public void getCash(long value, String name) {
-		long currentBalance;
-		do {
-			currentBalance = balance.get();
-			if (currentBalance < value) {
-				System.out.println(name + " error " + value);
-				return;
-			}
-		} while (!balance.compareAndSet(currentBalance, currentBalance - value));
-		System.out.println(name + " success " + value);
+		long currentBalance = balance.get();
+		if (currentBalance > value && balance.compareAndSet(currentBalance, currentBalance - value)) {
+			System.out.println(name + " success " + value + ". Balance " + balance.get());
+		} else {
+			System.out.println(name + " error " + value + ". Balance " + balance.get());
+		}
 	}
-
 
 	public static void main(String[] args) {
 		BankAtomic bankAtomic = new BankAtomic();
