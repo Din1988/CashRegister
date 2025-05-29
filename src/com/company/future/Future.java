@@ -18,7 +18,13 @@ public class Future {
 			System.out.println("Error");
 			return "Error";
 		});
-		System.out.println("Result 1: " + resultOne.get() + " 2: " + resultTwo.get());
+		CompletableFuture<Void> future = resultOne.thenCombine(resultTwo,
+				(r1, r2) -> {
+					System.out.println("Result 1: " + r1 + " 2: " + r2);
+					return null;
+				});
+
+		future.get();
 	}
 
 	private static String firstApiCall() {
